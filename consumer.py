@@ -13,14 +13,14 @@ def hello_consumer():
     return 'hello, i am consumer'
 
 
-@consumer.post('/consume')
+@consumer.post('/consumer/receive/from/aggregator')
 def consume():
     queue.put(int(request.form['value']))
     return 'ok'
 
 
-def receive_and_send_data(http):
-    URL = 'http://127.0.0.1:8080/receive'
+def send_consumer_data(http):
+    URL = 'http://127.0.0.1:8000/aggregator/receive/from/consumer'
     while True:
         value = queue.get()
         http.request('POST', URL, fields={
